@@ -1,3 +1,3 @@
 from pathlib import Path
 
-root_path = Path("C:\\Users\\user\\YandexDisk\\Вебинары Downloads")
+root_path = Path("C:/Users/user/YandexDisk/Вебинары Downloads")
