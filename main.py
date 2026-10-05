@@ -3,6 +3,8 @@ import shutil
 from pathlib import Path
 import time
 
+from config import root_path, dist_path
+
 
 def organize_files(source_dir, dist_dir):
     root_path = Path(source_dir)
@@ -69,8 +71,7 @@ def organize_files(source_dir, dist_dir):
 
 
 if __name__ == "__main__":
-    src_path = Path("C:\\Users\\user\\YandexDisk\\Вебинары Downloads")
-    dist_path = Path("C:\\Users\\user\\YandexDisk\\Вебинары ITEXPERT Курсы")
-    organize_files(src_path, dist_path)
+    src_path = root_path
+    organize_files(root_path, dist_path)
     print("Обработка всех файлов завершена!")
     time.sleep(3)
