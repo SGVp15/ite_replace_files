@@ -1,9 +1,12 @@
 import re
-import shutil
-from pathlib import Path
 import time
 
 from config import root_path, dist_path
+
+from pathlib import Path
+import shutil
+
+from ui import select_num_folder_gui
 
 
 def organize_files(source_dir, dist_dir):
@@ -48,26 +51,24 @@ def organize_files(source_dir, dist_dir):
 
         # СЦЕНАРИЙ Б: Найдено НЕСКОЛЬКО подходящих папок
         elif len(matches) > 1:
-            print(f"Файл: '{file_path.relative_to(root_path)}' переместить:")
-            for i, folder_name in enumerate(matches, 1):
-                print(f"  {i} - Папка [ {folder_name} ]")
-
-            skip_option_num = 0
-            print(f"  {skip_option_num} - Пропустить этот файл")
-            choice_input = input(f"  Ваш выбор (1-{skip_option_num}): ").strip()
-
-            if choice_input.isdigit():
-                choice_num = int(choice_input)
-                if 1 <= choice_num <= len(matches):
-                    chosen_folder = matches[choice_num - 1]
-                    target_dir = root_path / chosen_folder
-                    shutil.move(str(file_path), str(Path(target_dir, filename)))
-                else:
-                    print(f"  Файл '{filename}' пропущен.\n")
-                    continue
-            else:
-                print(f"  Некорректный ввод, файл '{filename}' пропущен.\n")
+            choice_num = select_num_folder_gui(file_path, root_path, matches, filename)
+            # Нажали "Пропустить"
+            if choice_num is None:
+                print(f"Файл '{filename}' пропущен.\n")
                 continue
+
+            chosen_folder = matches[choice_num - 1]
+
+            # Перемещаем файл
+            target_dir = root_path / chosen_folder
+
+            shutil.move(
+                str(file_path),
+                str(target_dir / filename)
+            )
+            print(f'[ Успешно ] {str(filename)} '
+                  f'\n\t\t ---> '
+                  f'\n{str(Path(chosen_folder)).replace(str(dist_path), "")}  \n\n')
 
 
 if __name__ == "__main__":
