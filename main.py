@@ -2,7 +2,7 @@ import datetime
 import re
 import time
 
-from config import root_path, dist_path
+from config import root_path, dist_path, FILE_EXTENSIONS
 
 from pathlib import Path
 import shutil
@@ -12,7 +12,7 @@ from ui import select_num_folder_gui
 
 def organize_files(source_dir, dist_dir):
     root_path = Path(source_dir)
-    all_files = [f for f in root_path.rglob('*') if f.is_file() and f.suffix.lower() in ('.txt','.xlsx', '.mp4')]
+    all_files = [f for f in root_path.rglob('*') if f.is_file() and f.suffix.lower() in FILE_EXTENSIONS]
 
     for file_path in all_files:
         filename = str(file_path.name)
