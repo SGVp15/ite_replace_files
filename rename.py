@@ -1,6 +1,6 @@
 import datetime
 import re
-import time
+
 from config import root_path, FILE_EXTENSIONS
 
 all_files = [f for f in root_path.rglob('*') if f.is_file() and f.suffix.lower() in FILE_EXTENSIONS]
@@ -28,4 +28,4 @@ for file_path in all_files:
     except Exception as e:
         print(f"Произошла непредвиденная ошибка: {e}")
 
-# time.sleep(3)
+time.sleep(3)
