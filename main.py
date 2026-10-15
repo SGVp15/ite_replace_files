@@ -1,3 +1,4 @@
+import datetime
 import re
 import time
 
@@ -11,7 +12,7 @@ from ui import select_num_folder_gui
 
 def organize_files(source_dir, dist_dir):
     root_path = Path(source_dir)
-    all_files = [f for f in root_path.rglob('*') if f.is_file() and f.suffix.lower() in ('.txt', '.mp4')]
+    all_files = [f for f in root_path.rglob('*') if f.is_file() and f.suffix.lower() in ('.txt','.xlsx', '.mp4')]
 
     for file_path in all_files:
         filename = str(file_path.name)
@@ -19,10 +20,17 @@ def organize_files(source_dir, dist_dir):
             continue
         is_zoom: bool = True if re.search(r'^gmt', filename.lower()) else False
 
-        date = str(re.findall(r'^(?:gmt)?(\d{8})[.\-]', filename.lower())[0]).strip()
-        year = date[:4]
-        month = date[4:6]
-        day = date[6:]
+        year = datetime.datetime.now().year
+        month = datetime.datetime.now().month
+        day = datetime.datetime.now().day
+
+        try:
+            date = str(re.findall(r'^(?:gmt)?(\d{8})[.\-]', filename.lower())[0]).strip()
+            year = date[:4]
+            month = date[4:6]
+            day = date[6:]
+        except IndexError:
+            pass
 
         all_dirs = [f for f in dist_dir.rglob('*')
                     if f.is_dir()
@@ -50,7 +58,7 @@ def organize_files(source_dir, dist_dir):
                   f'\n{str(Path(matches[0])).replace(str(dist_path), "")}  \n\n')
 
         # СЦЕНАРИЙ Б: Найдено НЕСКОЛЬКО подходящих папок
-        elif len(matches) > 1:
+        elif not matches or len(matches) > 1:
             choice_num = select_num_folder_gui(file_path, root_path, matches, filename)
             # Нажали "Пропустить"
             if choice_num is None:
