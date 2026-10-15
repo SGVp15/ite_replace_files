@@ -21,13 +21,13 @@ for file_path in all_files:
 
     try:
         file_path.rename(new_file_path)
-        print(f"'{file_path}'\n --> \n'{new_file_path}\n\n'")
+        print(f'\n{file_path}\n --> \n{new_file_path}\n\n')
     except FileNotFoundError:
-        print(f"Ошибка: Файл '{file_path}' не найден.")
+        print(f'Ошибка: Файл {file_path} не найден.')
     except FileExistsError:
-        print(f"Ошибка: Файл с именем '{new_file_path}' уже существует.")
+        print(f'Ошибка: Файл с именем {new_file_path} уже существует.')
     except Exception as e:
-        print(f"Произошла непредвиденная ошибка: {e}")
+        print(f'Произошла непредвиденная ошибка: {e}')
 
 print('[ END ]')
 time.sleep(3)
