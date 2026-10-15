@@ -28,4 +28,4 @@ for file_path in all_files:
     except Exception as e:
         print(f"Произошла непредвиденная ошибка: {e}")
 
-time.sleep(3)
+# time.sleep(3)
