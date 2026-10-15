@@ -21,7 +21,7 @@ for file_path in all_files:
 
     try:
         file_path.rename(new_file_path)
-        print(f"Файл '{file_path}' успешно переименован в '{new_file_path}'")
+        print(f"Файл '{file_path}'\n переименован в \n'{new_file_path}'")
     except FileNotFoundError:
         print(f"Ошибка: Файл '{file_path}' не найден.")
     except FileExistsError:
